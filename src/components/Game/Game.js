@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { sample } from '../../utils';
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import { WORDS } from '../../data';
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults';
@@ -13,14 +14,11 @@ console.info({ answer });
 function Game() {
   const [guesses, setGuesses] = useState([]);
   const handleAppendGuess = (label) => {
-    if (guesses.length >= 6) {
+    if (guesses.length >= NUM_OF_GUESSES_ALLOWED) {
       return;
     }
-    const newestGuess = {
-      id: crypto.randomUUID(),
-      label,
-    };
-    setGuesses([...guesses, newestGuess]);
+
+    setGuesses([...guesses, label]);
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NUM_OF_CHARS } from '../../constants';
 
 function GuessInput({ handleAppendGuess }) {
   const [guessAttempt, setGuessAttempt] = useState('');
@@ -6,7 +7,7 @@ function GuessInput({ handleAppendGuess }) {
   const submitHandler = (event) => {
     event.preventDefault();
     handleAppendGuess(guessAttempt);
-    console.log('value submitted:', guessAttempt);
+
     setGuessAttempt('');
   };
 
@@ -19,10 +20,10 @@ function GuessInput({ handleAppendGuess }) {
           type='text'
           value={guessAttempt}
           required
-          minLength={5}
-          maxLength={5}
-          pattern='[a-zA-Z]{5}'
-          title='Should be 5 characters long'
+          minLength={NUM_OF_CHARS}
+          maxLength={NUM_OF_CHARS}
+          pattern={`[a-zA-Z]{${NUM_OF_CHARS}}`}
+          title={`Should be ${NUM_OF_CHARS} characters long`}
           onChange={(event) => {
             const uppercaseValue = event.target.value.toLocaleUpperCase();
             setGuessAttempt(uppercaseValue);
