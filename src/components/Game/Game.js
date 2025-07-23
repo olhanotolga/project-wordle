@@ -17,9 +17,6 @@ function Game() {
   const [result, setResult] = useState();
 
   const handleAppendGuess = (label) => {
-    if (guesses.length >= NUM_OF_GUESSES_ALLOWED) {
-      return;
-    }
     const newGuesses = [...guesses, label];
 
     setGuesses(newGuesses);
@@ -31,12 +28,38 @@ function Game() {
     }
   };
 
+  let bannerVariant;
+  if (result === 'win') {
+    bannerVariant = 'happy';
+  } else if (result === 'lose') {
+    bannerVariant = 'sad';
+  }
+
+  const happyBannerContents = (
+    <p>
+      <strong>Congratulations!</strong> Got it in{' '}
+      <strong>
+        {guesses.length} {`${guesses.length === 1 ? 'guess' : 'guesses'}`}
+      </strong>
+      .
+    </p>
+  );
+
+  const sadBannerContents = (
+    <p>
+      Sorry, the correct answer is <strong>{answer}</strong>.
+    </p>
+  );
+
   return (
     <>
       <GuessResults guesses={guesses} answer={answer} />
       <GuessInput handleAppendGuess={handleAppendGuess} isDisabled={!!result} />
       {result && (
-        <Banner result={result} answer={answer} numOfGuesses={guesses.length} />
+        <Banner variant={bannerVariant}>
+          {bannerVariant === 'happy' && happyBannerContents}
+          {bannerVariant === 'sad' && sadBannerContents}
+        </Banner>
       )}
     </>
   );
