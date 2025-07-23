@@ -2,9 +2,8 @@ import React from 'react';
 import { range } from '../../utils';
 import { NUM_OF_CHARS } from '../../constants';
 import { checkGuess } from '../../game-helpers';
-import { answer } from '../Game';
 
-function Guess({ guess }) {
+function Guess({ guess, answer }) {
   const cells = range(NUM_OF_CHARS);
 
   const validatedCharacters = checkGuess(guess, answer);

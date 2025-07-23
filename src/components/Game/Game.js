@@ -8,7 +8,7 @@ import GuessResults from '../GuessResults';
 import Banner from '../Banner';
 
 // Pick a random word on every pageload.
-export const answer = sample(WORDS);
+const answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
 console.info({ answer });
 
@@ -33,7 +33,7 @@ function Game() {
 
   return (
     <>
-      <GuessResults guesses={guesses} />
+      <GuessResults guesses={guesses} answer={answer} />
       <GuessInput handleAppendGuess={handleAppendGuess} isDisabled={!!result} />
       {result && (
         <Banner result={result} answer={answer} numOfGuesses={guesses.length} />
