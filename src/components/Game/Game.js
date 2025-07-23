@@ -5,7 +5,8 @@ import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import { WORDS } from '../../data';
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults';
-import Banner from '../Banner';
+import GameWonBanner from '../GameWonBanner';
+import GameLostBanner from '../GameLostBanner';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -28,39 +29,12 @@ function Game() {
     }
   };
 
-  let bannerVariant;
-  if (result === 'win') {
-    bannerVariant = 'happy';
-  } else if (result === 'lose') {
-    bannerVariant = 'sad';
-  }
-
-  const happyBannerContents = (
-    <p>
-      <strong>Congratulations!</strong> Got it in{' '}
-      <strong>
-        {guesses.length} {`${guesses.length === 1 ? 'guess' : 'guesses'}`}
-      </strong>
-      .
-    </p>
-  );
-
-  const sadBannerContents = (
-    <p>
-      Sorry, the correct answer is <strong>{answer}</strong>.
-    </p>
-  );
-
   return (
     <>
       <GuessResults guesses={guesses} answer={answer} />
       <GuessInput handleAppendGuess={handleAppendGuess} isDisabled={!!result} />
-      {result && (
-        <Banner variant={bannerVariant}>
-          {bannerVariant === 'happy' && happyBannerContents}
-          {bannerVariant === 'sad' && sadBannerContents}
-        </Banner>
-      )}
+      {result === 'win' && <GameWonBanner numOfGuesses={guesses.length} />}
+      {result === 'lose' && <GameLostBanner answer={answer} />}
     </>
   );
 }
