@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NUM_OF_CHARS } from '../../constants';
 
-function GuessInput({ handleAppendGuess }) {
+function GuessInput({ handleAppendGuess, isDisabled }) {
   const [guessAttempt, setGuessAttempt] = useState('');
 
   const submitHandler = (event) => {
@@ -28,6 +28,7 @@ function GuessInput({ handleAppendGuess }) {
             const uppercaseValue = event.target.value.toLocaleUpperCase();
             setGuessAttempt(uppercaseValue);
           }}
+          disabled={isDisabled}
         />
       </form>
     </div>
