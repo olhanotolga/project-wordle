@@ -10,12 +10,10 @@ import GameWonBanner from '../GameWonBanner';
 import GameLostBanner from '../GameLostBanner';
 import Keyboard from '../Keyboard';
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function Game() {
+  const [answer, setAnswer] = useState(() => sample(WORDS));
+  // To make debugging easier, we'll log the solution in the console.
+  console.info({ answer });
   const [guesses, setGuesses] = useState([]);
   const [result, setResult] = useState();
   const [correctLetters, setCorrectLetters] = useState(new Set());
@@ -54,12 +52,30 @@ function Game() {
     }
   };
 
+  const handleRestartGame = () => {
+    setAnswer(() => sample(WORDS));
+
+    setGuesses([]);
+    setResult();
+
+    setCorrectLetters(new Set());
+    setMisplacedLetters(new Set());
+    setIncorrectLetters(new Set());
+  };
+
   return (
     <>
       <GuessResults guesses={guesses} />
       <GuessInput handleAppendGuess={handleAppendGuess} isDisabled={!!result} />
-      {result === 'win' && <GameWonBanner numOfGuesses={guesses.length} />}
-      {result === 'lose' && <GameLostBanner answer={answer} />}
+      {result === 'win' && (
+        <GameWonBanner
+          numOfGuesses={guesses.length}
+          handleRestartGame={handleRestartGame}
+        />
+      )}
+      {result === 'lose' && (
+        <GameLostBanner answer={answer} handleRestartGame={handleRestartGame} />
+      )}
       <Keyboard
         correctLetters={correctLetters}
         misplacedLetters={misplacedLetters}

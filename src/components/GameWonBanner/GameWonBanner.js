@@ -1,7 +1,8 @@
 import React from 'react';
 import Banner from '../Banner';
+import RestartButton from '../RestartButton';
 
-function GameWonBanner({ numOfGuesses }) {
+function GameWonBanner({ numOfGuesses, handleRestartGame }) {
   return (
     <Banner variant='happy'>
       <p>
@@ -11,6 +12,7 @@ function GameWonBanner({ numOfGuesses }) {
         </strong>
         .
       </p>
+      <RestartButton callbackFn={handleRestartGame} />
     </Banner>
   );
 }
