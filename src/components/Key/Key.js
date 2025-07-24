@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Key({ char }) {
-  return <span className='key'>{char}</span>;
+function Key({ char, status }) {
+  return <span className={`key ${status}`}>{char}</span>;
 }
 
 export default Key;
