@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 
 import { sample } from '../../utils';
-import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
+import {
+  NUM_OF_GUESSES_ALLOWED,
+  CHARACTER_STATUS,
+  GAME_STATUS,
+} from '../../constants';
 import { WORDS } from '../../data';
 import { checkGuess } from '../../game-helpers';
 import GuessInput from '../GuessInput';
@@ -32,11 +36,11 @@ function Game() {
     const newIncorrect = new Set(incorrectLetters);
 
     validatedGuess.forEach((el) => {
-      if (el.status === 'correct') {
+      if (el.status === CHARACTER_STATUS.CORRECT) {
         newCorrect.add(el.letter);
-      } else if (el.status === 'misplaced') {
+      } else if (el.status === CHARACTER_STATUS.MISPLACED) {
         newMispaced.add(el.letter);
-      } else if (el.status === 'incorrect') {
+      } else if (el.status === CHARACTER_STATUS.INCORRECT) {
         newIncorrect.add(el.letter);
       }
     });
@@ -46,9 +50,9 @@ function Game() {
     setIncorrectLetters(newIncorrect);
 
     if (label === answer) {
-      setResult('win');
+      setResult(GAME_STATUS.WON);
     } else if (newGuesses.length === NUM_OF_GUESSES_ALLOWED) {
-      setResult('lose');
+      setResult(GAME_STATUS.LOST);
     }
   };
 
@@ -67,13 +71,13 @@ function Game() {
     <>
       <GuessResults guesses={guesses} />
       <GuessInput handleAppendGuess={handleAppendGuess} isDisabled={!!result} />
-      {result === 'win' && (
+      {result === GAME_STATUS.WON && (
         <GameWonBanner
           numOfGuesses={guesses.length}
           handleRestartGame={handleRestartGame}
         />
       )}
-      {result === 'lose' && (
+      {result === GAME_STATUS.LOST && (
         <GameLostBanner answer={answer} handleRestartGame={handleRestartGame} />
       )}
       <Keyboard
